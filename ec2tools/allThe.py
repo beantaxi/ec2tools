@@ -1,8 +1,5 @@
-import boto3
-
-cli = boto3.client('ec2', 'us-west-2')
-factory = boto3.resource('ec2', 'us-west-2')
-
+from ._kernel import cli
+from ._kernel import factory
 
 def getData (elementName, idName, fnDescribe, fnFactory):
     resp = fnDescribe()
@@ -10,6 +7,12 @@ def getData (elementName, idName, fnDescribe, fnFactory):
     ids = [r[idName] for r in rawData]
     data = [fnFactory(id) for id in ids]
     return data
+
+
+def Addresses ():
+	resp = cli.describe_addresses()
+	data = resp['Addresses']
+	return data
 
 
 def Instances ():

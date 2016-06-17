@@ -1,16 +1,22 @@
-import boto3
+import sys
+from ._kernel import cli
 
 def Instance (idInstance, forWhat):
-	cli = boto3.client('ec2', 'us-west-2')
 	waiter = cli.get_waiter(forWhat)
-	print("Waiting on {} for '{}'".format(idInstance, forWhat))
+	print("Waiting on {} for '{}'".format(idInstance, forWhat), file=sys.stderr)
 	waiter.wait(InstanceIds=[idInstance])
+
+def InstanceRunning (idInstance):
+	Instance(idInstance, 'instance_running')
+
+
+def InstanceStatusOk (idInstance):
+	Instance(idInstance, 'instance_status_ok')
 
 
 def Volume (idVolume, forWhat):
-	cli = boto3.client('ec2', 'us-west-2')
 	waiter = cli.get_waiter(forWhat)
-	print("Waiting on {} for '{}'".format(idVolume, forWhat))
+	print("Waiting on {} for '{}'".format(idVolume, forWhat), file=sys.stderr)
 	waiter.wait(VolumeIds=[idVolume])
 
 

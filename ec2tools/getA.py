@@ -1,8 +1,4 @@
-import boto3
-
-cli = boto3.client('ec2', 'us-west-2')
-factory = boto3.resource('ec2', 'us-west-2')
-
+from ._kernel import factory
 
 def Instance (id):
     o = factory.Instance(id)
