@@ -1,36 +1,62 @@
 from . import allThe
 from . import api
 
+def listStuff (data, fields):
+	print(fields)
+	fieldList = fields.split(',')
+	braces = ','.join(['{}'] * len(fieldList))
+	for o in data:
+		args = []
+		for f in fieldList:
+			args.append(o.__getattribute__(f))
+		print(braces.format(*args))
+
+
 def Addresses ():
 	data = allThe.Addresses()
-	print("public_ip", "allocation_id", "instance_id", "association_id", "domain", "private_ip_address")
-	for d in data:
-		print("{},{},{},{},{},{}".format(d.get('PublicIp'), d.get('AllocationId'), d.get('InstanceId'), d.get('AssociationId'), d.get('Domain'), d.get('PrivateIpAddress')))
+	fields = "public_ip,allocation_id,instance_id,association_id,domain,private_ip_address"
+	listStuff(data, fields)
 
 
 def Instances ():
 	data = allThe.Instances()
-	print("id,name,status")
 	for o in data:
 		name = api.getName(o)
 		status = api.getInstanceStatus(o)
-		print("{},{},{},{},{}".format(o.id, name, status, o.launch_time, o.public_ip_address))
+		o.__setattr__('name', name)
+		o.__setattr__('status', status)
+	fields = "id,name,status"
+	listStuff(data, fields)
 
 
 def KeyPairs ():
-	pass
+	data = allThe.KeyPairs()
+	fields = "name,key_name,key_fingerprint"
+	listStuff(data, fields)
 
 
 def SecurityGroups ():
 	data = allThe.SecurityGroups()
-	print("id,name,description")
 	for o in data:
-		print("{},{},{}".format(o.group_id, o.group_name, o.description))
+		name = api.getName(o)
+		o.__setattr__('name', name)
+	fields = "id,name,description"
+	listStuff(data, fields)
+
+
+def Snapshots ():
+	data = allThe.Snapshots()
+	for o in data:
+		name = api.getName(o)
+		o.__setattr__('name', name)
+	fields = "id,name,volume_size,state,volume_id,owner_id,start_time,progress"
+	listStuff(data, fields)
 
 
 def Volumes ():
 	data = allThe.Volumes()
-	print("id,name,size,availabilityZone")
 	for o in data:
 		name = api.getName(o)
-		print("{},{},{},{},{}".format(o.id, name, o.size, o.availability_zone, o.create_time))
+		o.__setattr__('name', name)
+	fields = "id,name,size,availability_zone"
+	listStuff(data, fields)

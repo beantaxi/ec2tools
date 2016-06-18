@@ -3,6 +3,14 @@ import boto3
 # Shared variables
 cli = boto3.client("ec2")
 factory = boto3.resource("ec2")
+iam = boto3.resource("iam")
+
+def getCurrentOwnerId ():
+	currentUser = iam.CurrentUser()
+	arn = currentUser.arn
+	ownerId = arn.split(':')[4]
+	return ownerId
+
 
 def toList (*args):
     if not isinstance(args, list):

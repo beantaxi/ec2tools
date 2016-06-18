@@ -1,5 +1,6 @@
+from . import _kernel
+from . import getA
 from ._kernel import cli
-from ._kernel import factory
 
 def getData (elementName, idName, fnDescribe, fnFactory):
     resp = fnDescribe()
@@ -11,7 +12,8 @@ def getData (elementName, idName, fnDescribe, fnFactory):
 
 def Addresses ():
 	resp = cli.describe_addresses()
-	data = resp['Addresses']
+	rawData = resp['Addresses']
+	data = [getA.Address(d) for d in rawData]
 	return data
 
 
@@ -24,22 +26,30 @@ def Instances ():
         for instance in instances:
             id = instance['InstanceId']
             ids.append(id)
-    data = [factory.Instance(id) for id in ids]
+    data = [getA.Instance(id) for id in ids]
     return data
 
 
 def KeyPairs ():
     resp = cli.describe_key_pairs()
     rawData = resp['KeyPairs']
-    data = [factory.KeyPair(r['KeyName']) for r in rawData]
+    data = [getA.KeyPair(r['KeyName']) for r in rawData]
     return data
 
 
 def SecurityGroups ():
-    data = getData('SecurityGroups', 'GroupId', cli.describe_security_groups, factory.SecurityGroup)
+    data = getData('SecurityGroups', 'GroupId', cli.describe_security_groups, getA.SecurityGroup)
     return data 
 
 
+def Snapshots ():
+	ownerId = _kernel.getCurrentOwnerId()
+	resp = cli.describe_snapshots(OwnerIds=[ownerId])
+	rawData = resp['Snapshots']
+	data = [getA.Snapshot(d['SnapshotId']) for d in rawData]
+	return data
+
+
 def Volumes ():
-    data = getData('Volumes', 'VolumeId', cli.describe_volumes, factory.Volume)
+    data = getData('Volumes', 'VolumeId', cli.describe_volumes, getA.Volume)
     return data 
