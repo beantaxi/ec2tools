@@ -3,7 +3,6 @@ from ._kernel import cli
 
 def Instance (idInstance, forWhat):
 	waiter = cli.get_waiter(forWhat)
-	print("Waiting on {} for '{}'".format(idInstance, forWhat), file=sys.stderr)
 	waiter.wait(InstanceIds=[idInstance])
 
 def InstanceRunning (idInstance):
@@ -16,7 +15,6 @@ def InstanceStatusOk (idInstance):
 
 def Volume (idVolume, forWhat):
 	waiter = cli.get_waiter(forWhat)
-	print("Waiting on {} for '{}'".format(idVolume, forWhat), file=sys.stderr)
 	waiter.wait(VolumeIds=[idVolume])
 
 

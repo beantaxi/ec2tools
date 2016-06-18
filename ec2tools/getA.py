@@ -4,6 +4,7 @@ def Instance (id):
     o = factory.Instance(id)
     return o
 
+
 def KeyPair (name):
     o = factory.KeyPair(name)
     return o
