@@ -33,7 +33,7 @@ def Instances ():
 	data = allThe.Instances()
 	_addNames(data)
 	_addStatuses(data)
-	fields = "id,name,status"
+	fields = "id,name,status,public_ip_address"
 	_listData(data, fields)
 
 
