@@ -30,6 +30,11 @@ def Instances ():
     return data
 
 
+def InternetGateways ():
+    data = getData('InternetGateways', 'InternetGatewayId', cli.describe_internet_gateways, getA.InternetGateway)
+    return data 
+
+
 def KeyPairs ():
     resp = cli.describe_key_pairs()
     rawData = resp['KeyPairs']

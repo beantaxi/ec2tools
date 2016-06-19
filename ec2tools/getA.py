@@ -17,6 +17,11 @@ def Instance (id):
     return o
 
 
+def InternetGateway (id):
+    o = factory.InternetGateway(id)
+    return o
+
+
 def KeyPair (name):
     o = factory.KeyPair(name)
     return o

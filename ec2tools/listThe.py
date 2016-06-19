@@ -37,6 +37,13 @@ def Instances ():
 	_listData(data, fields)
 
 
+def InternetGateways ():
+	data = allThe.InternetGateways()
+	_addNames(data)
+	fields = "id,name"
+	_listData(data, fields)
+
+
 def KeyPairs ():
 	data = allThe.KeyPairs()
 	fields = "name,key_name,key_fingerprint"
