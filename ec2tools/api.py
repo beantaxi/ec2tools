@@ -25,19 +25,19 @@ def createTag (resource, key, value):
 	return resp
 
 
-def getInstanceStatus (instance):
-	status = instance.state['Name']
-	return status
-
-
-def getName (resource):
-	nameTag = getTag(resource, "Name")
+def getName (resource, tagsFieldName='tags'):
+	nameTag = getTag(resource, "Name", tagsFieldName)
 	name = nameTag['Value'] if nameTag else None
 	return name
 
 
-def getTag (resource, tagName):
-	tags = resource.tags
+def getStatus (o):
+	status = o.state['Name']
+	return status
+
+
+def getTag (resource, tagName, tagFieldName='tags'):
+	tags = resource.__getattribute__(tagFieldName)
 	matches = [tag for tag in tags if tag['Key'] == tagName] if tags else []
 	if len(matches) > 1:
 		raise(Exception("More than one matching tag"))

@@ -22,6 +22,11 @@ def KeyPair (name):
     return o
 
 
+def NetworkInterface (id):
+	o = factory.NetworkInterface(id)
+	return o
+
+
 def SecurityGroup (id):
 	o = factory.SecurityGroup(id)
 	return o

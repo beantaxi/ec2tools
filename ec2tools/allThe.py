@@ -37,6 +37,11 @@ def KeyPairs ():
     return data
 
 
+def NetworkInterfaces ():
+    data = getData('NetworkInterfaces', 'NetworkInterfaceId', cli.describe_network_interfaces, getA.NetworkInterface)
+    return data 
+
+
 def SecurityGroups ():
     data = getData('SecurityGroups', 'GroupId', cli.describe_security_groups, getA.SecurityGroup)
     return data 
