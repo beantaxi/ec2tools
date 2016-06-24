@@ -68,13 +68,12 @@ def nameVolume (idVolume, name):
 
 
 def _getAllocationIdByIp (addresses, ip):
-	rs = [a for a in addresses if a['PublicIp'] == ip]
-	allocationId = rs[0].get('AllocationId') if rs else None
+	rs = [a for a in addresses if a.public_ip == ip]
+	allocationId = rs[0].allocation_id if rs else None
 	return allocationId
 	
 	
 def _getAssociationIdByIp (addresses, ip):
-	rs = [a for a in addresses if a['PublicIp'] == ip]
-	assocationId = rs[0].get('AssociationId') if rs else None
+	rs = [a for a in addresses if a.public_ip == ip]
+	assocationId = rs[0].association_id if rs else None
 	return assocationId
-
