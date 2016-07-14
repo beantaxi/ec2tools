@@ -1,0 +1,2 @@
+def simpleTest ():
+	pass
