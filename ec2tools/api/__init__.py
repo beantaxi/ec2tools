@@ -7,6 +7,6 @@ from .lifecycle import getStatus
 from .lifecycle import launchInstance 
 from .addresses import associateAddress 
 from .addresses import disassociateAddress 
-from .launcher import uploadLargeFile
+from .glacier import uploadLargeFile
 
 __all__ = ['createTag', 'getName', 'getTag', 'nameInstance', 'nameVolume', 'getStatus', 'launchInstance', 'associateAddress', 'disassociateAddress']
