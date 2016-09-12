@@ -59,6 +59,7 @@ def Snapshots ():
 	data = [getA.Snapshot(d['SnapshotId']) for d in rawData]
 	return data
 
+# def Vaults ():
 
 def Volumes ():
     data = getData('Volumes', 'VolumeId', cli.describe_volumes, getA.Volume)
