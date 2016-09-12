@@ -1,6 +1,7 @@
 from . import _kernel
 from . import getA
 from ._kernel import cli
+from ._kernel import glacier
 
 def getData (elementName, idName, fnDescribe, fnFactory):
     resp = fnDescribe()
@@ -59,7 +60,12 @@ def Snapshots ():
 	data = [getA.Snapshot(d['SnapshotId']) for d in rawData]
 	return data
 
-# def Vaults ():
+
+def Vaults ():
+	allVaults = glacier.vaults.all() # This is an iterator; we need a list
+	vaults = list(allVaults)         # Now we're good
+	return vaults
+
 
 def Volumes ():
     data = getData('Volumes', 'VolumeId', cli.describe_volumes, getA.Volume)

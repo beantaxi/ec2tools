@@ -1,4 +1,5 @@
 from ._kernel import factory
+from ._kernel import glacier
 
 def Address (d):
 	if d['Domain'] == 'classic':
@@ -39,6 +40,12 @@ def SecurityGroup (id):
 
 def Snapshot (id):
 	o = factory.Snapshot(id)
+	return o
+
+def Vault (name):
+# 	accountId = _kernel.getAccountId()
+	accountId = '-'
+	o = glacier.Vault(accountId, name)
 	return o
 
 
