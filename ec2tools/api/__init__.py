@@ -9,4 +9,4 @@ from .addresses import associateAddress
 from .addresses import disassociateAddress 
 from .glacier import uploadLargeFile
 
-__all__ = ['createTag', 'getName', 'getTag', 'nameInstance', 'nameVolume', 'getStatus', 'launchInstance', 'associateAddress', 'disassociateAddress']
+__all__ = ['createTag', 'getName', 'getTag', 'nameInstance', 'nameVolume', 'getStatus', 'launchInstance', 'associateAddress', 'disassociateAddress', 'uploadLargeFile']
