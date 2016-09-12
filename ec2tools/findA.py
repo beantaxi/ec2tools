@@ -1,5 +1,5 @@
 from . import allThe
-from .. import api
+from . import api
 
 def Instance (*, name=None, hostname=None, ip=None):
 	data = allThe.Instances()
