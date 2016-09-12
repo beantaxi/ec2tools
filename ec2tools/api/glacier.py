@@ -3,7 +3,7 @@ import botocore.utils
 import io
 import math
 import os.path
-from ec2tools import _kernel
+from ec2tools import getA
 
 def genChunk (f, chunk_size):
 	# Create buffer
@@ -82,8 +82,7 @@ def uploadLargeFile (path, vaultName, archiveName=None, chunkSize=None):
 	if not chunkSize:
 		fileSize = os.path.getsize(path)
 		chunkSize = getChunkSize(fileSize)
-	accountId = _kernel.getAccountId()
-	vault	= _kernel.glacier.Vault(accountId, vaultName)
+	vault	= getA.Vault(vaultName)
 	multi = vault.initiate_multipart_upload(archiveDescription=archiveName, partSize=str(chunkSize))
 	f = io.FileIO(path, 'rb')
 	for chunk in genChunk(f, chunkSize):
@@ -92,7 +91,5 @@ def uploadLargeFile (path, vaultName, archiveName=None, chunkSize=None):
 	print("Done.")
 	size = chunk['iEnd']+1
 	checksum = botocore.utils.calculate_tree_hash(io.FileIO(path, 'rb'))
-#	resp = None
 	resp = multi.complete(archiveSize=str(size), checksum=checksum)
 	return resp
-

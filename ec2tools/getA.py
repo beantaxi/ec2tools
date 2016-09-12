@@ -43,7 +43,6 @@ def Snapshot (id):
 	return o
 
 def Vault (name):
-# 	accountId = _kernel.getAccountId()
 	accountId = '-'
 	o = glacier.Vault(accountId, name)
 	return o
