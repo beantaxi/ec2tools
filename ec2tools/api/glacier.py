@@ -54,9 +54,7 @@ def genChunk (f, chunk_size):
 #    chunkSize = 2^n*1M
 #
 #  gives us our chunksize. Which we then need to clip to the Min and Max values.
-#
-#  Solution: use log base 2, to get the chunk size that sneaks us under 100
-#    chunks, unless nData > 100*MAX_CHUNK
+#  Convert it to int, and we're good to go
 #
 def getChunkSize (totalSize):
 	ONE_MEG = 1<<20
@@ -69,7 +67,8 @@ def getChunkSize (totalSize):
 	y = math.log(x, 2)
 	n = math.ceil(y)
 	rawChunkSize = math.pow(2, n) * ONE_MEG
-	chunkSize = min(MAX_CHUNK, max(rawChunkSize, MIN_CHUNK))
+	chunkSize = int(min(MAX_CHUNK, max(rawChunkSize, MIN_CHUNK)))
+
 	return chunkSize
 
 
