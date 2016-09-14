@@ -54,7 +54,7 @@ def SecurityGroups ():
 
 
 def Snapshots ():
-	ownerId = _kernel.getCurrentOwnerId()
+	ownerId = _kernel.getAccountId()
 	resp = cli.describe_snapshots(OwnerIds=[ownerId])
 	rawData = resp['Snapshots']
 	data = [getA.Snapshot(d['SnapshotId']) for d in rawData]
