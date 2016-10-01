@@ -12,9 +12,25 @@ MIN_CHUNK = ONE_MEG
 MAX_CHUNK = 4*ONE_GIG
 
 
-def genChunk (f, chunk_size):
+######################################################################
+#
+# This is a generator which yields chunks from a file, one chunkSize
+# at a time.
+#
+# This gets a bit weird, because the Boto3 Glacier API is expecting the 
+# chunk as a file-like object (even though the docs say otherwise).
+# So we need to read the data a chunk at a time into the bytearray,
+# and then create a BytesIO out of the bytearray, and return the BytesIO
+# as our chunk.
+#
+
+
+
+
+def genChunk (f, chunkSize):
+	chunkSize = validateChunkSize(chunkSize)
 	# Create buffer
-	buf = bytearray(chunk_size)
+	buf = bytearray(chunkSize)
 	iStart = 0
 	nRead = 0
 	while True:
@@ -69,7 +85,9 @@ def getChunkSize (totalSize):
 	return chunkSize
 
 
-# The rules:
+#######################################################################
+#
+# Chunk size validation rules:
 #
 #   Minimum chunk size = 1M
 #   Maximum chunk size = 4G
@@ -86,22 +104,32 @@ def validateChunkSize (chunkSize):
 	return chunkSize	
 
 
+
+
+#######################################################################
+#
+# Upload a large
+#
+
 def uploadLargeFile (path, vaultName, archiveName=None, chunkSize=None):
-		
-	if not os.path.exists(path): raise Exception("{} does not exist".format(path))	# Validate that file exists
-	if not os.path.isfile(path): raise Exception("{} is not a file".format(path))    # Validate it's a file
+	if not os.path.exists(path): raise Exception("{} does not exist".format(path))	     # Validate that file exists
+	if not os.path.isfile(path): raise Exception("{} is not a file".format(path))         # Validate it's a file
 	fileSize = os.path.getsize(path)
-	if filesize < MIN_SIZE: raise Exception("File size must be >= {}".format(MIN_SIZE))   # Validate the file is not too small
-	# Validate chunkSize is legit
+	if filesize < MIN_SIZE: raise Exception("File size must be >= {}".format(MIN_SIZE))   # Validate the file is not too small for multipart
+
+	f = io.FileIO(path, 'rb')
+	vault	= getA.Vault(vaultName)
+	qq	
 	# Validate vault exists
 	if not archiveName:
 		archiveName = os.path.basename(path)
 	if not chunkSize:
 		chunkSize = getChunkSize(fileSize)
-	vault	= getA.Vault(vaultName)
+	else:
+		chunkSize = validateChunkSize(chunkSize)
 	multi = vault.initiate_multipart_upload(archiveDescription=archiveName, partSize=str(chunkSize))
-	f = io.FileIO(path, 'rb')
 	for chunk in genChunk(f, chunkSize):
+		fChunk = io.BytesIO(chunk)                                                        # Glacier is expecting a file-like object, not a bytearray
 		print("Uploading {} to {} ...".format(chunk['iStart'], chunk['iEnd']))
 		multi.upload_part(body=chunk['body'], range=chunk['range'])
 	print("Done.")
