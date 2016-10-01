@@ -1,4 +1,5 @@
 from ec2tools._kernel import cli 
+from ec2tools.api import nameInstance
 
 def getStatus (o):
 	status = o.state['Name']
