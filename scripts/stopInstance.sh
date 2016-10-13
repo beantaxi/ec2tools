@@ -6,5 +6,6 @@ if [ $# -lt 1 ]; then
 fi
 
 idInstance=$1
-python3 -c "import ec2tools; ec2tools.getA.Instance(id='$idInstance').stop()"
+PYPATH=${PYPATH:-python3}
+$PYPATH -c "import ec2tools; ec2tools.getA.Instance(id='$idInstance').stop()"
 

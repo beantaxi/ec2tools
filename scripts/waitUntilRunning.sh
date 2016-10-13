@@ -5,5 +5,6 @@ if [ $# -lt 2 ]; then
 	exit -1
 fi
 
-$idInstance=$1
-python3 -c "import ec2tools; ec2tools.waitFor.InstanceRunning('$idInstance')"
+idInstance=$1
+PYPATH=${PYPATH:-python3}
+$PYPATH -c "import ec2tools; ec2tools.waitFor.InstanceRunning('$idInstance')"

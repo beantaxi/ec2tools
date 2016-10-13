@@ -8,7 +8,8 @@ name=$1
 keyName=$2
 ip=$3
 
-python3 -c "import ec2tools; ec2tools.api.launchInstance(name='$name', keyName='$keyName', securityGroup='setup', )"
+PYPATH=${PYPATH:-python3}
+$PYPATH -c "import ec2tools; ec2tools.api.launchInstance(name='$name', keyName='$keyName', securityGroup='setup', )"
 
 
 from pprint import pprint as pp

@@ -6,4 +6,5 @@ if [ $# -lt 1 ]; then
 fi
 
 idInstance=$1
-python3 -c "import ec2tools; ec2tools.waitFor.InstanceStatusOk('$idInstance')"
+PYPATH=${PYPATH:-python3}
+$PYPATH -c "import ec2tools; ec2tools.waitFor.InstanceStatusOk('$idInstance')"
