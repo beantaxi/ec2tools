@@ -1,72 +1,125 @@
 from . import _kernel
+from . import Efs
 from . import getA
 from ._kernel import cli
+from ._kernel import factory
 from ._kernel import glacier
 
-def getData (elementName, idName, fnDescribe, fnFactory):
-    resp = fnDescribe()
-    rawData = resp[elementName]
-    ids = [r[idName] for r in rawData]
-    data = [fnFactory(id) for id in ids]
-    return data
+
+def getData (coll):
+	all = coll.all()
+	data = [o for o in all]
+	return data
 
 
 def Addresses ():
 	resp = cli.describe_addresses()
 	rawData = resp['Addresses']
-	data = [getA.Address(d) for d in rawData]
+	data = [getA.Address(el) for el in rawData]
+	return data
+
+
+def AvailabilityZones ():
+	resp = cli.describe_availability_zones()
+	rawData = resp['AvailabilityZones']
+	data = [getA._AvailabilityZone(el) for el in rawData]
+	return data
+
+
+def ClassicAddresses ():
+	data = getData(factory.classic_addresses)
+	return data
+
+
+def DhcpOptionsSets ():
+	data = getData(factory.dhcp_options_sets)
+	return data
+
+
+def FileSystems ():
+	resp = Efs.client.describe_file_systems()
+	rawData = resp['FileSystems']
+	data = [getA._FileSystem(el) for el in rawData]
+	return data
+
+
+def Images ():
+	data = getData(factory.images)
 	return data
 
 
 def Instances ():
-    resp = cli.describe_instances()
-    rawData = resp['Reservations']
-    ids = []
-    for row in rawData:
-        instances = row['Instances']
-        for instance in instances:
-            id = instance['InstanceId']
-            ids.append(id)
-    data = [getA.Instance(id) for id in ids]
-    return data
+	data = getData(factory.instances)
+	return data
 
 
 def InternetGateways ():
-    data = getData('InternetGateways', 'InternetGatewayId', cli.describe_internet_gateways, getA.InternetGateway)
-    return data 
+	data = getData(factory.internet_gateways)
+	return data 
 
 
 def KeyPairs ():
-    resp = cli.describe_key_pairs()
-    rawData = resp['KeyPairs']
-    data = [getA.KeyPair(r['KeyName']) for r in rawData]
-    return data
+	data = getData(factory.key_pairs)
+	return data
+
+
+def NetworkAcls ():
+	data = getData(factory.network_acls)
+	return data
 
 
 def NetworkInterfaces ():
-    data = getData('NetworkInterfaces', 'NetworkInterfaceId', cli.describe_network_interfaces, getA.NetworkInterface)
+    data = getData(factory.network_interfaces)
     return data 
+
+
+def PlacementGroups ():
+	data = getData(factory.placement_groups)
+	return data
+
+
+def RouteTables ():
+	data = getData(factory.route_tables)
+	return data
 
 
 def SecurityGroups ():
-    data = getData('SecurityGroups', 'GroupId', cli.describe_security_groups, getA.SecurityGroup)
-    return data 
+	data = getData(factory.security_groups)
+	return data
 
 
 def Snapshots ():
-	ownerId = _kernel.getAccountId()
-	resp = cli.describe_snapshots(OwnerIds=[ownerId])
-	rawData = resp['Snapshots']
-	data = [getA.Snapshot(d['SnapshotId']) for d in rawData]
+	data = getData(factory.snapshots)
+	return data
+
+
+def Subnets ():
+	data = getData(factory.subnets)
 	return data
 
 
 def Vaults ():
-	allVaults = glacier.vaults.all() # This is an iterator; we need a list
-	vaults = list(allVaults)         # Now we're good
-	return vaults
+	data = getData(glacier.vaults)
+	return data
 
 
 def Volumes ():
-    data = getData('Volumes', 'VolumeId', cli.describe_volumes, getA.Volume)
-    return data 
+	data = getData(factory.volumes)
+	return data 
+
+
+def Vpcs ():
+	data = getData(factory.vpcs)	
+	return data
+
+
+def VpcAddresses ():
+	data = getData(factory.vpc_addresses)
+	return data
+
+
+def VpcPeeringConnections ():
+	data = getData(factory.vpc_peering_connections)
+	return data
+
+

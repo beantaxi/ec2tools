@@ -29,6 +29,18 @@ def Addresses ():
 	_listData(data, fields)
 
 
+def AvailabilityZones ():
+	data = allThe.AvailabilityZones()
+	fields = "name, region, state"
+	_listData(data, fields)
+
+
+def FileSystems ():
+	data = allThe.FileSystems()
+	fields = "id,name,state,mountTargetCount,size"
+	_listData(data, fields)
+
+
 def Instances ():
 	data = allThe.Instances()
 	_addNames(data)
@@ -70,6 +82,13 @@ def Snapshots ():
 	_listData(data, fields)
 
 
+def Subnets ():
+	data = allThe.Subnets()
+	_addNames(data)
+	fields = "id, cidr_block, availability_zone, vpc_id, default_for_az, state"
+	_listData(data, fields)
+
+
 def Vaults ():
 	data = allThe.Vaults()
 	fields = "name, creation_date, last_inventory_date, size_in_bytes, number_of_archives"
@@ -80,4 +99,11 @@ def Volumes ():
 	data = allThe.Volumes()
 	_addNames(data)
 	fields = "id,name,size,availability_zone"
+	_listData(data, fields)
+
+
+def Vpcs ():
+	data = allThe.Vpcs()
+	_addNames(data)
+	fields="id, name, state, is_default, cidr_block"
 	_listData(data, fields)
