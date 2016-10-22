@@ -59,6 +59,8 @@ def FileSystem (id):
 
 def Instance (id):
     o = _kernel.factory.Instance(id)
+    name = _kernel.getName(o)
+    o.__setattr__('name', name)
     return o
 
 

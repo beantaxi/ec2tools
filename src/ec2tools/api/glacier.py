@@ -71,7 +71,7 @@ def genChunk (f, chunkSize):
 #  Convert the result to int, and we're good to go
 
 def _getChunkSize (totalSize):
-	k =: ONE_MEG*100
+	k = ONE_MEG*100
 	x = totalSize/k
 	y = math.log(x, 2)
 	n = math.ceil(y)

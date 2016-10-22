@@ -18,6 +18,13 @@ def createFn (fnOrArg):
 	return fn
 
 
+def createTag (resource, key, value):
+	tag = {'Key': key, 'Value': value}
+	tags = [tag]
+	resp = resource.create_tags(Tags=tags)
+	return resp
+
+
 def first (coll, fnOrArg=None):
 	fn = createFn(fnOrArg)
 	hits = [el for el in coll if fn(el)]
@@ -27,6 +34,11 @@ def first (coll, fnOrArg=None):
 		hit = hits[0]
 	return hit
 		
+
+def flattenListOfLists (listOfLists):
+	list = [val for sublist in listOfLists for val in sublist]
+	return list
+
 
 def getAccountId ():
 	currentUser = iam.CurrentUser()
@@ -43,6 +55,22 @@ def getId (arg):
 	return id
 
 
+def getName (resource, tagsFieldName='tags'):
+	tags = resource.__getattribute__(tagsFieldName)
+	nameTag = getTag(resource, "Name", tagsFieldName)
+	name = nameTag['Value'] if nameTag else None
+	return name
+
+
+def getTag (resource, tagName, tagFieldName='tags'):
+	tags = resource.__getattribute__(tagFieldName)
+	matches = [tag for tag in tags if tag['Key'] == tagName] if tags else []
+	if len(matches) > 1:
+		raise(Exception("More than one matching tag"))
+	tag = matches[0] if matches else None
+	return tag
+
+
 def justOne (coll, fnOrArg=None):
 	fn = createFn(fnOrArg)
 	hits = [el for el in coll if fn(el)]
@@ -52,6 +80,12 @@ def justOne (coll, fnOrArg=None):
 		raise Exception("More than 1 hit found")
 	hit = hits[0]
 	return hit
+
+
+def setName (resource, name):
+	nameTag = {'Key': 'Name', 'Value': name}
+	tags = [nameTag]
+	resource.create_tags(Tags=tags)
 
 
 def toList (*args):

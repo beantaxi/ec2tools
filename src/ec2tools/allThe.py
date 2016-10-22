@@ -50,6 +50,9 @@ def Images ():
 
 def Instances ():
 	data = getData(factory.instances)
+	for o in data:
+		name = _kernel.getName(o)
+		o.__setattr__('name', name)
 	return data
 
 

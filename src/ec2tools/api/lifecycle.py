@@ -1,5 +1,5 @@
 from ec2tools._kernel import cli 
-from ec2tools.api import nameInstance
+from ec2tools.api import tags
 
 def getStatus (o):
 	status = o.state['Name']
@@ -13,5 +13,5 @@ def launchInstance (*, name, keyName, imageId, instanceType, securityGroup):
 		                           SecurityGroups=[securityGroup],
 		                           InstanceType=instanceType)
 	id = resp['Instances'][0]['InstanceId']
-	nameInstance(id, name)
+	tags.nameInstance(id, name)
 	return id

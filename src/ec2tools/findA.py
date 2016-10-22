@@ -1,11 +1,10 @@
-from . import allThe
-from . import api
+from . import _kernel, allThe
 
 def Snapshot (*, name):
 	if not name:
 		raise Exception("Please specify a name")
 	data = allThe.Snapshots()
-	hits = [o for o in data if api.getName(o) == name]
+	hits = [o for o in data if _kernel.getName(o) == name]
 	hit = None
 	if hits:
 		if len(hits) > 1:
@@ -17,7 +16,7 @@ def Snapshot (*, name):
 def Instance (*, name=None, hostname=None, ip=None):
 	data = allThe.Instances()
 	if name:
-		hits = [o for o in data if api.getName(o) == name]
+		hits = [o for o in data if _kernel.getName(o) == name]
 	elif ip:
 		hits = [o for o in data if o.public_ip_address == ip]
 	elif hostname:
