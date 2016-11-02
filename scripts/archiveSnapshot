@@ -1,0 +1,19 @@
+How to automate a snapshot transfer to dropbox
+	create volume from snapshot
+	attach volume to igor
+	bash time:
+	   edit fstab:
+	      mount snapshot
+    	   mount useme
+	      mount useme2
+   stop igor
+   change igor to c4large
+   bash:
+   	tar snapshot to useme
+   stop igor
+   change igor to c42xlarge
+   bash:
+      bz2 tar to useme2
+   stop igor
+   change igor to micro/tiny
+

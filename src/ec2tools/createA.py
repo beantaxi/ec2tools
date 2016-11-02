@@ -1,5 +1,5 @@
-from ._kernel import cli
-from ._kernel import glacier
+from .kernel import cli
+from .kernel import glacier
 
 
 def Vault (name):

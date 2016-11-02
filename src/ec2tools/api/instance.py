@@ -1,4 +1,4 @@
-from ec2tools import _kernel
+from ec2tools import getA 
 
 def getNextAvailableDevice (instance):
-	if isinstance(instance, str): instance = _kernel.getA.Instance(instance)
+	if isinstance(instance, str): instance = getA.Instance(instance)

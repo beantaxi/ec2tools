@@ -1,89 +1,102 @@
 import sys
-from . import _kernel
-from ._kernel import cli
+from . import kernel
+from .kernel import cli
+from pprint import pprint
 
 def BundleTaskComplete (*ids):
     waiter = cli.get_waiter('bundle_task_complete')
-    ids = _kernel.toList(*ids)
+    args = kernel.toList(*args)
+    ids = [kernel.getId(o) for o in args]
     waiter.wait(BundleIds=ids)
 
 def ConsoleOutputAvailable (idInstance):
     waiter = cli.get_waiter('console_output_available')
     waiter.wait(InstanceId=id)
 
-def ConversionTaskCancelled (*ids):
+def ConversionTaskCancelled (*args):
     waiter = cli.get_waiter('conversion_task_cancelled')
-    ids = _kernel.toList(*ids)
+    args = kernel.toList(*args)
+    ids = [kernel.getId(o) for o in args]
     waiter.wait(ConversionTaskIds=ids)
 
-def ConversionTaskCompleted (*ids):
+def ConversionTaskCompleted (*args):
     waiter = cli.get_waiter('conversion_task_completed')
-    ids = _kernel.toList(*ids)
+    args = kernel.toList(*args)
+    ids = [kernel.getId(o) for o in args]
     waiter.wait(ConversionTaskIds=ids)
 
-def ConversionTaskDeleted (*ids):
+def ConversionTaskDeleted (*args):
     waiter = cli.get_waiter('conversion_task_deleted')
-    ids = _kernel.toList(*ids)
+    args = kernel.toList(*args)
+    ids = [kernel.getId(o) for o in args]
     waiter.wait(ConversionTaskIds=ids)
 
-def CustomerGatewayAvailable (*ids):
+def CustomerGatewayAvailable (*args):
     waiter = cli.get_waiter('customer_gateway_available')
-    ids = _kernel.toList(*ids)
+    args = kernel.toList(*args)
+    ids = [kernel.getId(o) for o in args]
     waiter.wait(CustomerGatewayIds)
 
-def ExportTaskCancelled (*ids):
+def ExportTaskCancelled (*args):
     waiter = cli.get_waiter('export_task_cancelled')
-    ids = _kernel.toList(*ids)
+    args = kernel.toList(*args)
+    ids = [kernel.getId(o) for o in args]
     waiter.wait(ExportTaskIds)
 
-def ExportTaskCompleted(*ids):
+def ExportTaskCompleted(*args):
     waiter = cli.get_waiter('export_task_completed')
-    ids = _kernel.toList(*ids)
+    args = kernel.toList(*args)
+    ids = [kernel.getId(o) for o in args]
     waiter.wait(ExportTaskIds)
 
-def ImageAvailable (*ids):
+def ImageAvailable (*args):
     waiter = cli.get_waiter('image_available')
-    ids = _kernel.toList(*ids)
+    args = kernel.toList(*args)
+    ids = [kernel.getId(o) for o in args]
     waiter.wait(ImageIds)
 
-def ImageExists (*ids):
+def ImageExists (*args):
     waiter = cli.get_waiter('image_exists')
-    ids = _kernel.toList(*ids)
+    args = kernel.toList(*args)
+    ids = [kernel.getId(o) for o in args]
     waiter.wait(ImageIds)
 
-def Instance (forWhat, *ids):
+def Instance (forWhat, *args):
     waiter = cli.get_waiter(forWhat)
-    ids = _kernel.toList(*ids)
+    args = kernel.toList(*args)
+    ids = [kernel.getId(o) for o in args]
     waiter.wait(InstanceIds=ids)
 
-def InstanceExists (*ids):
-    Instance('instance_exists', *ids)
+def InstanceExists (*args):
+    Instance('instance_exists', *args)
 
-def InstanceRunning (*ids):
-    Instance('instance_running', *ids)
+def InstanceRunning (*args):
+    Instance('instance_running', *args)
 
-def InstanceStatusOk (*ids):
-    Instance('instance_status_ok', *ids)
+def InstanceStatusOk (*args):
+    Instance('instance_status_ok', *args)
 
-def InstanceStopped (*ids):
-    Instance('instance_stopped', *ids)
+def InstanceStopped (*args):
+    Instance('instance_stopped', *args)
 
-def InstanceTerminated (*ids):
-    Instance('instance_terminated', *ids)
+def InstanceTerminated (*args):
+    Instance('instance_terminated', *args)
 
 def KeyPairExists (*names):
     waiter = cli.get_waiter('key_pair_exists')
-    names = _kernel.toList(*names)
+    names = kernel.toList(*names)
     waiter.wait(KeyNames=names)
 
-def NatGatewayAvailable (*ids):
+def NatGatewayAvailable (*args):
     waiter = cli.get_waiter('nat_gateway_available')
-    ids = _kernel.toList(*ids)
+    args = kernel.toList(*args)
+    ids = [kernel.getId(o) for o in args]
     waiter.wait(NatGatewayIds=ids)
 
-def NetworkInterfaceAvailable (*ids):
+def NetworkInterfaceAvailable (*args):
     waiter = cli.get_waiter('network_interface_available')
-    ids = _kernel.toList(*ids)
+    args = kernel.toList(*args)
+    ids = [kernel.getId(o) for o in args]
     waiter.wait(NetworkInterfaceIds=ids)
 
 def PasswordDataAvailable (id):
@@ -92,27 +105,31 @@ def PasswordDataAvailable (id):
 
 def SnapshotCompleted (*ids):
     waiter = cli.get_waiter('snapshot_completed')
-    ids = _kernel.toList(*ids)
+    ids = kernel.toList(*ids)
     waiter.wait(SnapshotIds=ids)
 
-def SpotInstanceRequestFulfilled (*ids):
+def SpotInstanceRequestFulfilled (*args):
     waiter = cli.get_waiter('spot_instance_request_fulfilled')
-    ids = _kernel.toList(*ids)
+    args = kernel.toList(*args)
+    ids = [kernel.getId(o) for o in args]
     waiter.wait(SpotInstanceRequestIds=ids)
 
-def SubnetAvailable (*ids):
+def SubnetAvailable (*args):
     waiter = cli.get_waiter('subnet_available')
-    ids = _kernel.toList(*ids)
+    args = kernel.toList(*args)
+    ids = [kernel.getId(o) for o in args]
     waiter.wait(SubnetIds=ids)
 
-def SystemStatusOk (*ids):
+def SystemStatusOk (*args):
     waiter = cli.get_waiter('system_status_ok')
-    ids = _kernel.toList(*ids)
+    args = kernel.toList(*args)
+    ids = [kernel.getId(o) for o in args]
     waiter.wait(InstanceIds=ids)
 
-def Volume (forWhat, *ids):
+def Volume (forWhat, *args):
     waiter = cli.get_waiter(forWhat)
-    ids = _kernel.toList(*ids)
+    args = kernel.toList(*args)
+    ids = [kernel.getId(o) for o in args]
     waiter.wait(VolumeIds=ids)
 
 def VolumeAvailable (*ids):
@@ -126,20 +143,23 @@ def VolumeInUse (*ids):
 
 def VpcAvailable (*ids):
     waiter = cli.get_waiter('vpc_available')
-    ids = _kernel.toList(*ids)
+    ids = kernel.toList(*ids)
     waiter.wait(VpcIds=ids)
 
-def VpcPeeringConnectionExists (*ids):
+def VpcPeeringConnectionExists (*args):
     waiter = cli.get_waiter('vpc_peering_connection_exists')
-    ids = _kernel.toList(*ids)
+    args = kernel.toList(*args)
+    ids = [kernel.getId(o) for o in args]
     waiter.wait(VpcPeeringConnectionIds=ids)
 
-def VpnConnectionDeleted (*ids):
+def VpnConnectionDeleted (*args):
     waiter = cli.get_waiter('vpn_connection_available')
-    ids = _kernel.toList(*ids)
+    args = kernel.toList(*args)
+    ids = [kernel.getId(o) for o in args]
     waiter.wait(VpnConnectionIds=ids)
 
-def VpnConnectionAvailable (*ids):
+def VpnConnectionAvailable (*args):
     waiter = cli.get_waiter('vpn_connection_deleted')
-    ids = _kernel.toList(*ids)
+    args = kernel.toList(*args)
+    ids = [kernel.getId(o) for o in args]
     waiter.wait(VpnConnectionIds=ids)

@@ -1,14 +1,14 @@
-from . import _kernel, allThe
+from . import kernel, allThe
 
 
 def _addNames (data, tagsFieldName='tags'):
 	for o in data:
-		name = _kernel.getName(o, tagsFieldName)
+		name = kernel.getName(o, tagsFieldName)
 		o.__setattr__('name', name)
 
 def _addStatuses (data):
 	for o in data:
-		status = api.getStatus(o)
+		status = kernel.getStatus(o)
 		o.__setattr__('status', status)
 
 
@@ -47,8 +47,6 @@ def FileSystems (data=None):
 def Instances (data=None):
 	if data == None:
 		data = allThe.Instances()
-	_addNames(data)
-	_addStatuses(data)
 	fields = "id,name,status,public_ip_address"
 	_listData(data, fields)
 

@@ -1,5 +1,5 @@
 from ec2tools import *
-from ec2tools import _kernel
+from ec2tools import kernel
 
 def createFileSystem (name=None):
 	idFileSystem = Efs.createFileSystem(name)
@@ -40,7 +40,7 @@ def _getSubnetForAz (az, subnets):
 def getMountTargetForInstance (fileSystem, instance):
 	mountTargets = Efs.getMountTargets(fileSystem)
 	fn = lambda o: _isMountTargetForInstance(o, instance)
-	mountTarget = _kernel.first(mountTargets, fn)
+	mountTarget = kernel.first(mountTargets, fn)
 	return mountTarget
 
 

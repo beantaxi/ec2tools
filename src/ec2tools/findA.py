@@ -1,32 +1,32 @@
-from . import _kernel, allThe
-
-def Snapshot (*, name):
-	if not name:
-		raise Exception("Please specify a name")
-	data = allThe.Snapshots()
-	hits = [o for o in data if _kernel.getName(o) == name]
-	hit = None
-	if hits:
-		if len(hits) > 1:
-			raise Exception("Multiple snapshots found")
-		else:
-			hit = hits[0]
-	return hit
+from . import kernel, allThe
 
 def Instance (*, name=None, hostname=None, ip=None):
 	data = allThe.Instances()
 	if name:
-		hits = [o for o in data if _kernel.getName(o) == name]
+		hits = [o for o in data if kernel.getName(o) == name]
 	elif ip:
 		hits = [o for o in data if o.public_ip_address == ip]
 	elif hostname:
 		hits = [o for o in data if o.public_dns_name == hostname]
 	else:
 		raise Exception('Instance() called with no arguments')
-	hit = None
-	if hits:
-		if len(hits) > 1:
-			raise Exception("Multiple instances found")
-		else:
-			hit = hits[0]
+	instance = kernel.justOneOrNone(hits)
+	return instance
+
+
+def Snapshot (*, name):
+	if not name:
+		raise Exception("Please specify a name")
+	data = allThe.Snapshots()
+	hits = [o for o in data if kernel.getName(o) == name]
+	hit = kernel.justOneOrNone(hits)
+	return hit
+
+
+def Volume (*, name):
+	if not name:
+		raise Exception("Please specify a name")
+	data = allThe.Volumes()
+	hits = [o for o in data if kernel.getName(o) == name]
+	hit = kernel.justOneOrNone(hits)
 	return hit

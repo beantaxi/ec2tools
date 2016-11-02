@@ -1,7 +1,7 @@
-from ec2tools import _kernel, getA, waitFor
+from ec2tools import kernel, getA, waitFor
 
 def attachVolumes (instance, volumes, initDevice=None):
-	if isinstance(instance, str): instance = _kernel.getA.Instance(instance)
+	if isinstance(instance, str): instance = getA.Instance(instance)
 	devices = getDevices(instance)
 	g = genDevices(initDevice)
 	for volume in volumes:
@@ -21,13 +21,13 @@ def create (*, name, keyName, imageId, instanceType, securityGroup):
 
 
 def createAndRun (*, name, keyName, imageId, instanceType, securityGroup):
-	instances = _kernel.factory.create_instances(ImageId=imageId, 
+	instances = kernel.factory.create_instances(ImageId=imageId, 
  	                                             MinCount=1, MaxCount=1,
  	                                             KeyName=keyName,
  	                                             SecurityGroups=[securityGroup],
  	                                             InstanceType=instanceType)
-	instance = _kernel.justOne(instances)
-	_kernel.setName(instance, name)
+	instance = kernel.justOne(instances)
+	kernel.setName(instance, name)
 	return instance
 
 
@@ -39,17 +39,17 @@ def genDevices (initDevice='/dev/xvdf'):
 
 
 def getAvailabilityZone (instance):
-	if isinstance(instance, str): instance = _kernel.getA.Instance(instance)
+	if isinstance(instance, str): instance = getA.Instance(instance)
 	subnet = getA.Subnet(instance.subnet_id)
 	availabilityZone = getA.AvailabilityZone(subnet.availability_zone)
 	return availabilityZone
 
 
 def getDevices (instance):
-	if isinstance(instance, str): instance = _kernel.getA.Instance(instance)
+	if isinstance(instance, str): instance = getA.Instance(instance)
 	volumes = instance.volumes.all()
 	listOfLists = [o.attachments for o in volumes]
-	attachments = _kernel.flattenListOfLists(listOfLists)
+	attachments = kernel.flattenListOfLists(listOfLists)
 	devices = [d['Device'] for d in attachments]
 	return devices
 

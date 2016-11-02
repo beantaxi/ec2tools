@@ -1,4 +1,4 @@
-from ec2tools import _kernel
+from ec2tools import kernel
 from ec2tools import Efs
 
 # From http://stackoverflow.com/questions/652276/is-it-possible-to-create-anonymous-objects-in-python
@@ -10,10 +10,10 @@ class Mocker(object):
 def Address (d):
 	if d['Domain'] == 'classic':
 		id = d['PublicIp']
-		o = _kernel.factory.ClassicAddress(id)
+		o = kernel.factory.ClassicAddress(id)
 	elif d['Domain'] == 'vpc':
 		id = d['AllocationId']
-		o = _kernel.factory.VpcAddress(id)
+		o = kernel.factory.VpcAddress(id)
 	else:
 		raise Exception("Unknown address type: '{}'".format(d['Domain']))
 	return o
@@ -29,9 +29,9 @@ class _AvailabilityZone:
 
 def AvailabilityZone (name):
 	zoneNames = [name]
-	resp = _kernel.cli.describe_availability_zones(ZoneNames=zoneNames)
+	resp = kernel.cli.describe_availability_zones(ZoneNames=zoneNames)
 	rawData = resp['AvailabilityZones']
-	d = _kernel.justOne(rawData)
+	d = kernel.justOne(rawData)
 	o = _AvailabilityZone(d)
 	return o
 
@@ -52,24 +52,24 @@ class _FileSystem:
 def FileSystem (id):
 	resp = Efs.client.describe_file_systems(FileSystemId=id)
 	hits = resp.get('FileSystems', None)
-	hit = _kernel.justOne(hits)
+	hit = kernel.justOne(hits)
 	o = _FileSystem(hit)
 	return o
 
 
 def Instance (id):
-    o = _kernel.factory.Instance(id)
-    name = _kernel.getName(o)
+    o = kernel.factory.Instance(id)
+    name = kernel.getName(o)
     o.__setattr__('name', name)
     return o
 
 
 def InternetGateway (id):
-    o = _kernel.factory.InternetGateway(id)
+    o = kernel.factory.InternetGateway(id)
     return o
 
 def KeyPair (name):
-    o = _kernel.factory.KeyPair(name)
+    o = kernel.factory.KeyPair(name)
     return o
 
 class _MountTarget:
@@ -86,27 +86,29 @@ class _MountTarget:
 def MountTarget (id):
 	resp = Efs.client.describe_mount_targets(MountTargetId=id)
 	hits = resp.get('MountTargets', None)
-	hit = _kernel.justOne(hits)
+	hit = kernel.justOne(hits)
 	o = _MountTarget(hit)
 	return o
 
+
 def NetworkInterface (id):
-	o = _kernel.factory.NetworkInterface(id)
+	o = kernel.factory.NetworkInterface(id)
 	return o
 
 
 def SecurityGroup (id):
-	o = _kernel.factory.SecurityGroup(id)
+	o = kernel.factory.SecurityGroup(id)
 	return o
 
 
 def Snapshot (id):
-	o = _kernel.factory.Snapshot(id)
+	o = kernel.factory.Snapshot(id)
+	o = kernel.enrichSnapshot(o)
 	return o
 
 
 def Subnet (id):
-	o = _kernel.factory.Subnet(id)
+	o = kernel.factory.Subnet(id)
 	return o
 
 
@@ -117,5 +119,5 @@ def Vault (name):
 
 
 def Volume (id):
-    o = _kernel.factory.Volume(id)
+    o = kernel.volume.get(id)
     return o

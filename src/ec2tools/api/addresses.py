@@ -1,4 +1,4 @@
-from ec2tools._kernel import cli 
+from ec2tools.kernel import cli 
 from ec2tools import allThe
 
 def associateAddress (*, ip, idInstance):

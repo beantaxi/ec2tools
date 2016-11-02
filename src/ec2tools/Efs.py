@@ -1,7 +1,7 @@
 import boto3
 import uuid
 from . import getA
-from . import _kernel
+from . import kernel
 
 client = boto3.client('efs')
 
@@ -24,7 +24,7 @@ def createMountTarget (idFileSystem, idSubnet):
 
 
 def getMountTargets (fileSystem):
-	idFileSystem = _kernel.getId(fileSystem)
+	idFileSystem = kernel.getId(fileSystem)
 	resp = client.describe_mount_targets(FileSystemId=idFileSystem)
 	rawData = resp['MountTargets']
 	mountTargets = [getA._MountTarget(d) for d in rawData]

@@ -1,10 +1,5 @@
-from ec2tools._kernel import cli 
+from ec2tools.kernel import cli 
 from ec2tools.api import tags
-
-def getStatus (o):
-	status = o.state['Name']
-	return status
-
 
 def launchInstance (*, name, keyName, imageId, instanceType, securityGroup):
 	resp = cli.run_instances(ImageId=imageId, 

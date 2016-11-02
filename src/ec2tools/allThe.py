@@ -1,9 +1,9 @@
-from . import _kernel
 from . import Efs
 from . import getA
-from ._kernel import cli
-from ._kernel import factory
-from ._kernel import glacier
+from . import kernel
+from .kernel import cli
+from .kernel import factory
+from .kernel import glacier
 
 
 def getData (coll):
@@ -49,10 +49,7 @@ def Images ():
 
 
 def Instances ():
-	data = getData(factory.instances)
-	for o in data:
-		name = _kernel.getName(o)
-		o.__setattr__('name', name)
+	data = kernel.instance.all()
 	return data
 
 
@@ -107,7 +104,7 @@ def Vaults ():
 
 
 def Volumes ():
-	data = getData(factory.volumes)
+	data = kernel.volume.all()
 	return data 
 
 
