@@ -1,3 +1,33 @@
+def addMethod (o, name, f):
+	method = lambda *args, **kwargs: f(o, *args, **kwargs)
+	o.__setattr__(name, method)
+
+
+# Adding a dynamic property is tricky for a couple of reasons.
+#
+# Reason 1: The property() function, and all Python descriptors, work at the class
+# level, not the object level. So the property must be added to the class.
+#
+# Reason 2: It looks like Boto classes are generated on the fly. For example,
+# if you create two snapshots, the class for each snapshot has the same name.
+# But type(snapshot1) == type(snapshot2) returns False. And if you create a 
+# dummy snapshot, and adding a property to that snapshot's type, and then 
+# create more snapshots, they will not have that custom property. It appears 
+# that every Boto object has its own distinct type.
+#
+# All this means to add a property to an object, you get the type, check if it
+# already has the property, and if it not add the property to the type.
+#
+# Simple :)
+def addProperty (o, propName, getter, setter=None):
+	T = type(o)
+	if not hasattr(T, propName):
+		setattr(T, propName, property(getter, setter))
+	return o
+
+
+
+
 # This handy function is used to flexibly return a lambda, when passed
 # an argument, a callable, or None
 #

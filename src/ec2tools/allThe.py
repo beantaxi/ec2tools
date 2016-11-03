@@ -94,7 +94,7 @@ def Snapshots ():
 
 
 def Subnets ():
-	data = getData(factory.subnets)
+	data = kernel.subnet.all()
 	return data
 
 

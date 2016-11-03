@@ -1,6 +1,4 @@
-from . import objects
 from .vars import factory
-
 
 ###############################################################################
 #
@@ -9,21 +7,13 @@ from .vars import factory
 ###############################################################################
 
 
-def enrich (o):
-	if not o:
-		o = None
-	objects.addNameProperty(o)
-	return o
-
-
 def all ():
-	data = [enrich(o) for o in factory.volumes.all()]
+	data = factory.snapshots.all()
 	return data 
 
 
 def get (id):
-    o = factory.Volume(id)
-    o = enrich(o)
+    o = factory.Subnet(id)
     return o
 
 
@@ -33,3 +23,8 @@ def getObject (arg):
 	else:
 		instance = arg
 	return instance
+
+
+
+
+

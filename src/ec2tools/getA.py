@@ -58,9 +58,7 @@ def FileSystem (id):
 
 
 def Instance (id):
-    o = kernel.factory.Instance(id)
-    name = kernel.getName(o)
-    o.__setattr__('name', name)
+    o = kernel.instance.get(id)
     return o
 
 
@@ -102,13 +100,12 @@ def SecurityGroup (id):
 
 
 def Snapshot (id):
-	o = kernel.factory.Snapshot(id)
-	o = kernel.enrichSnapshot(o)
+	o = kernel.snapshot.get(id)
 	return o
 
 
 def Subnet (id):
-	o = kernel.factory.Subnet(id)
+	o = kernel.subnet.get(id)
 	return o
 
 

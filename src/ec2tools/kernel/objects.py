@@ -1,4 +1,8 @@
-from . import tags
+from . import misc, tags
+
+def addNameProperty (o):
+	misc.addProperty(o, 'name', getName, setName)
+
 
 # ec2tools attempts to support using objects or object ids interchangeably.
 #
@@ -22,14 +26,8 @@ def getName (resource, tagsFieldName='tags'):
 	return name
 
 
-def getStatus (o):
-	status = o.state['Name']
-	return status
-
-
 def setName (resource, name):
 	nameTag = {'Key': 'Name', 'Value': name}
 	tags = [nameTag]
 	resource.create_tags(Tags=tags)
-
 
