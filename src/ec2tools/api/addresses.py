@@ -1,7 +1,9 @@
+from ec2tools import kernel
 from ec2tools.kernel import cli 
 from ec2tools import allThe
 
-def associateAddress (*, ip, idInstance):
+def associateAddress (ip, instance):
+	idInstance = kernel.getId(instance)
 	addrs = allThe.Addresses()
 	allocationId = _getAllocationIdByIp(addrs, ip)
 	resp = cli.associate_address(InstanceId=idInstance, AllocationId=allocationId)

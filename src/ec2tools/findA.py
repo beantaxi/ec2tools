@@ -14,6 +14,15 @@ def Instance (*, name=None, hostname=None, ip=None):
 	return instance
 
 
+def SecurityGroup (*, name):
+	if not name:
+		raise Exception("Please specify a name")
+	data = allThe.SecurityGroups()
+	hits = [o for o in data if o.group_name == name]
+	hit = kernel.justOneOrNone(hits)
+	return hit
+
+
 def Snapshot (*, name):
 	if not name:
 		raise Exception("Please specify a name")

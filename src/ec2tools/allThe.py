@@ -89,7 +89,7 @@ def SecurityGroups ():
 
 
 def Snapshots ():
-	data = getData(factory.snapshots)
+	data = kernel.snapshot.all()
 	return data
 
 

@@ -27,7 +27,8 @@ def getName (resource, tagsFieldName='tags'):
 
 
 def setName (resource, name):
-	nameTag = {'Key': 'Name', 'Value': name}
-	tags = [nameTag]
-	resource.create_tags(Tags=tags)
+	if not name == None:
+		nameTag = {'Key': 'Name', 'Value': name}
+		tags = [nameTag]
+		resource.create_tags(Tags=tags)
 

@@ -30,7 +30,7 @@ def all ():
 
 
 def get (id):
-    o = factory.Volume(id)
+    o = factory.Instance(id)
     o = enrich(o)
     return o
 
@@ -78,9 +78,11 @@ def _getStatus (o):
 
 
 def _attachVolumes (this, volumes, initDevice=None):
-	if isthis(this, str): this = getA.Instance(this)
-	devices = getDevices(this)
-	g = genDevices(initDevice)
+	devices = this.devices
+	if initDevice:
+		g = genDevices(initDevice)
+	else:
+		g = genDevices()
 	for volume in volumes:
 		device = next(g)
 		print("Attaching {} to {}... ".format(volume.id, device))
